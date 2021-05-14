@@ -10,7 +10,7 @@ To run the application just execute the application with the correct command lin
 ### As npm module
 
 ```bash
-npm i jackal-tools -g
+npm i jackal-postman-tools -g
 
 jackal -f [source-folder] -s [start-collection] -o [output-collection]
 ```
