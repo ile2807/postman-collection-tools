@@ -1,0 +1,40 @@
+{
+	"item": [],
+	"event": [],
+	"variable": [
+		{
+			"type": "any",
+			"value": "testuser",
+			"key": "username"
+		},
+		{
+			"type": "any",
+			"value": "no_secret",
+			"key": "password"
+		},
+		{
+			"type": "any",
+			"value": "9",
+			"key": "userId"
+		},
+		{
+			"type": "any",
+			"value": "http://localhost",
+			"key": "host"
+		},
+		{
+			"type": "any",
+			"value": "8080",
+			"key": "port"
+		},
+		{
+			"type": "any",
+			"value": "secret",
+			"key": "password"
+		}
+	],
+	"info": {
+		"_postman_id": "aece7b6c-477e-46f4-8f7e-823c6b4a30f0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	}
+}

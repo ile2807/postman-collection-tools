@@ -25,9 +25,9 @@ if (args.h) {
 }
 
 validateParameters();
-
-if (sourceCollectionName == undefined) {
-    sourceCollectionName = "blank.json"
+var sourceFileContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
+if (sourceCollectionName != undefined) {
+    sourceFileContent = fs.readFileSync(sourceCollectionName).toString();
 }
 
 console.log('Source collections folder > ' + chalk.cyan(collectionsFoleder));
@@ -35,7 +35,7 @@ console.log('Start collection > ' + chalk.cyan(sourceCollectionName));
 console.log('Target collection > ' + chalk.cyan(targetCollectionName));
 line();
 
-var targetCollection = new Collection(JSON.parse(fs.readFileSync(sourceCollectionName).toString()));
+var targetCollection = new Collection(JSON.parse(sourceFileContent));
 
 fs.readdir(collectionsFoleder, (error, files) => {
     if (error) return console.log(error);
@@ -96,7 +96,7 @@ function validateParameters() {
             chalk.red.bold("Parameters error")
         );
         line();
-        console.log("You must provide source folder with existing collections, use the -s option followed by the source folder path, or -h to see help");
+        console.log("You must provide source folder with existing collections, use the -f option followed by the source folder path, or -h to see help");
         line();
         exit();
     }
@@ -105,7 +105,7 @@ function validateParameters() {
             chalk.red.bold("Parameters error")
         );
         line();
-        console.log("You must provide target file, use -f option followed by the output file path, or -h to see help");
+        console.log("You must provide target file, use -o option followed by the output file path, or -h to see help");
         line();
         exit();
     }
