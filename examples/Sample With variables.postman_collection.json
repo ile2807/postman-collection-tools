@@ -1,10 +1,48 @@
 {
 	"info": {
-		"_postman_id": "a2320e34-e137-4e4e-b224-af5b3d42528e",
+		"_postman_id": "4bd3ef72-5f23-4ccd-8b9d-092eef914228",
 		"name": "Sample With variables",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [],
+	"item": [
+		{
+			"name": "Group 1",
+			"item": [
+				{
+					"name": "Yahoo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://yahoo.com",
+							"protocol": "https",
+							"host": [
+								"yahoo",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Google",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://google.com",
+					"protocol": "https",
+					"host": [
+						"google",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
 	"event": [
 		{
 			"listen": "prerequest",

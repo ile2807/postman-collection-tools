@@ -1,10 +1,49 @@
 {
 	"info": {
-		"_postman_id": "98936950-4084-485c-9691-00d5fdc833f7",
+		"_postman_id": "304530eb-35df-43b8-8889-036c3e61944a",
 		"name": "Sample With variables 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [],
+	"item": [
+		{
+			"name": "Group 2",
+			"item": [
+				{
+					"name": "Off net",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://off.net.mk",
+							"protocol": "https",
+							"host": [
+								"off",
+								"net",
+								"mk"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Time",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://time.mk",
+					"protocol": "https",
+					"host": [
+						"time",
+						"mk"
+					]
+				}
+			},
+			"response": []
+		}
+	],
 	"event": [
 		{
 			"listen": "prerequest",

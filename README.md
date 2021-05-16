@@ -12,19 +12,35 @@ To run the application just execute the application with the correct command lin
 ```bash
 npm i jackal-postman-tools -g
 
-jackal -f [source-folder] -s [start-collection] -o [output-collection]
+jackal -m [mode] -f [source-folder] -s [start-collection] -o [output-collection]
 ```
 
 ### As node application from source
 
 ```bash
-node index.js -f [source-folder] -s [start-collection] -o [output-collection]
+node index.js -m [mode] -f [source-folder] -s [start-collection] -o [output-collection]
 ```
 
 > NOTE: start-collection argument is optional, if not specified a new postman collection will be created
 
+## Mode options
 
-After the execution
+|Mode   |Meaning   |Behavior   |
+|---|---|---|
+|**merge-variables**   |Merge collection variables  |Merges variables from all source folder collection in the collection variables of the output collection   |
+|**merge-requests**   |Merge collection requests   | Merges all requests from all source folder collection into the output collection, collection variables are not transfered, only requests  |
+
+> Modes can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
+
+Example:
+
+```Bash
+jackal -f ./examples -o outTemp.json -m merge-requests
+jackal -f ./examples -s outTemp -o out.json -m merge-variables
+```
+
+
+## After the execution
 
 ```Bash
       _                  _              _ 
@@ -34,7 +50,7 @@ After the execution
   \___/   \__,_|  \___| |_|\_\  \__,_| |_|
 
 Source collections folder > ./examples
-Start collection to be upgraded > blank.json
+Start collection to be upgraded > Blank collection
 Target collection > test.json
 ---------------------------------------------------------------------
 Processing source file: Sample With variables 2.postman_collection.json
