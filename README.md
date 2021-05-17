@@ -27,8 +27,9 @@ node index.js -m [mode] -f [source-folder] -s [start-collection] -o [output-coll
 
 |Mode   |Meaning   |Behavior   |
 |---|---|---|
-|**merge-variables**   |Merge collection variables  |Merges variables from all source folder collection in the collection variables of the output collection   |
-|**merge-requests**   |Merge collection requests   | Merges all requests from all source folder collection into the output collection, collection variables are not transfered, only requests  |
+|**merge-variables**  |Merge collection variables  |Merges all variables from all source folder collections in the collection variables of the output collection   |
+|**merge-requests**   |Merge collection requests   |Merges all requests from all source folder collections into the output collection, collection variables are not transfered, only requests  |
+|**merge-collection** |Merge collection in folders |Merges each collection requests from all collections (from the source folder) in a separate folder in the output collection. Collection variables in this mode are setup in the PreRequest script of each requests folder|
 
 > Modes can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
 
@@ -52,6 +53,7 @@ jackal -f ./examples -s outTemp -o out.json -m merge-variables
 Source collections folder > ./examples
 Start collection to be upgraded > Blank collection
 Target collection > test.json
+Mode > merge-requests
 ---------------------------------------------------------------------
 Processing source file: Sample With variables 2.postman_collection.json
 Processing source file: Sample With variables.postman_collection.json  

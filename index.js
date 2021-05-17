@@ -7,6 +7,7 @@ const { help, line } = require('./lib/helper');
 const validateParameters = require('./lib/validation');
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
+const collectionMerge = require('./lib/collection-merger');
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
 const mode = args.m;
@@ -43,6 +44,10 @@ switch (mode) {
     }
     case "merge-requests": {
         requestMerge(sourceFileContent, collectionsFolder, targetCollectionName);
+        break;
+    }
+    case "merge-collections": {
+        collectionMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
     }
     default:{
