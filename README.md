@@ -1,7 +1,8 @@
 # Jackal tools
 Jackal tools is an utility application that manipulates `Postman collections`.
 
-This application combines all collection variables from postman collections located in the `source` folder and adds into the `target` collection
+This application has multiple features distinguished by the `mode` parameter (see below).
+It combines collection items from [Postman](https://www.postman.com/) collections located in the `source` folder and appends into the `target` collection. All current features work as aggregations and produce: ***one output collection from many source collections***. 
 
 ## How to use it
 
