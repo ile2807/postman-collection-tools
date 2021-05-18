@@ -4,16 +4,19 @@ const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
 const { help, line } = require('./lib/helper');
-const validateParameters = require('./lib/validation');
+const { validateParametersMerging, validateParametersTesting } = require('./lib/validation');
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
+const { addTest200 } = require('./lib/test-appender')
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
 const mode = args.m;
 var sourceCollectionName = args.s;
+var sourceFileContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
 
 clear();
+
 console.log(
     chalk.yellow(
         figlet.textSync('Jackal', { horizontalLayout: 'full' })
@@ -23,11 +26,15 @@ if (args.h) {
     help();
 }
 
-validateParameters(collectionsFolder, targetCollectionName);
-var sourceFileContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
+if (mode.startsWith("test")) {
+    validateParametersTesting(sourceCollectionName, targetCollectionName);
+} else if (mode.startsWith("merge")) {
+    validateParametersMerging(collectionsFolder, targetCollectionName);
+}
+
 if (sourceCollectionName != undefined) {
     sourceFileContent = fs.readFileSync(sourceCollectionName).toString();
-}else{
+} else {
     sourceCollectionName = "Blank collection"
 }
 
@@ -38,6 +45,10 @@ console.log('Mode > ' + chalk.cyan(mode))
 line();
 
 switch (mode) {
+    case "test-http200": {
+        addTest200(sourceCollectionName, targetCollectionName);
+        break;
+    }
     case "merge-variables": {
         variableMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
@@ -50,7 +61,7 @@ switch (mode) {
         collectionMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
     }
-    default:{
+    default: {
         console.log('Mode > ' + chalk.magenta(mode) + ' not recognized, please use -h to see more info on possible modes');
         line();
         break;

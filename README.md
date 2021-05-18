@@ -31,14 +31,16 @@ node index.js -m [mode] -f [source-folder] -s [start-collection] -o [output-coll
 |**merge-variables**  |Merge collection variables  |Merges all variables from all source folder collections in the collection variables of the output collection   |
 |**merge-requests**   |Merge collection requests   |Merges all requests from all source folder collections into the output collection, collection variables are not transfered, only requests  |
 |**merge-collection** |Merge collection in folders |Merges each collection requests from all collections (from the source folder) in a separate folder in the output collection. Collection variables in this mode are setup in the PreRequest script of each requests folder|
+|**test-http200**     |Append test assertions      |Adds test asserts (to check if response HTTP code is 200) to all requests of the source collection and saves to the output collection. In this mode, the -f flag is not used 
 
 > Modes can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
 
-Example:
+Examples:
 
 ```Bash
 jackal -f ./examples -o outTemp.json -m merge-requests
 jackal -f ./examples -s outTemp -o out.json -m merge-variables
+jackal -m test-http200 -s "./examples/Sample With variables 2.postman_collection.json" -o out.json
 ```
 
 
@@ -71,3 +73,5 @@ and the Output collection will be populated with the aggregated variables
 - Duplicate (name and value) variables will not be added in the collection multiple times
 - If values are different in two same named variables then both will be added to the Output collection
 - Empty variables are not added 
+- When using the test-* modes, the source collection is no altered in any way other than adding testing assertions in the `Test` part of ***requests only***. The assertions are added beside existing `Test` code.
+- This application does not remove features from collections
