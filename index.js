@@ -8,7 +8,8 @@ const { validateParametersMerging, validateParametersTesting } = require('./lib/
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
-const { addTest200 } = require('./lib/test-appender')
+const {addTest200} = require('./lib/test-appender')
+const {cleanup} = require('./lib/cleanup')
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
 const mode = args.m;
@@ -47,6 +48,10 @@ line();
 switch (mode) {
     case "test-http200": {
         addTest200(sourceCollectionName, targetCollectionName);
+        break;
+    }
+    case "cleanup": {
+        cleanup(sourceCollectionName, targetCollectionName);
         break;
     }
     case "merge-variables": {

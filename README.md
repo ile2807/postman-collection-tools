@@ -32,6 +32,7 @@ node index.js -m [mode] -f [source-folder] -s [start-collection] -o [output-coll
 |**merge-requests**   |Merge collection requests   |Merges all requests from all source folder collections into the output collection, collection variables are not transfered, only requests  |
 |**merge-collection** |Merge collection in folders |Merges each collection requests from all collections (from the source folder) in a separate folder in the output collection. Collection variables in this mode are setup in the PreRequest script of each requests folder|
 |**test-http200**     |Append test assertions      |Adds test asserts (to check if response HTTP code is 200) to all requests of the source collection and saves to the output collection. In this mode, the -f flag is not used 
+|**cleanup**          |Remove duplicate requests   |All repeating occurences of absolutely the same requests (including name) will be removed, only one will remain. The remaining instance is the first occurence that the cleanup algorithm encounters while analysing. Scope of comparing duplicates is the whole collection with all folders and subfolders. In this mode, the -f flag is not used |
 
 > Modes can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
 
