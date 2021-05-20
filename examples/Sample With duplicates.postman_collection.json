@@ -27,28 +27,33 @@
 			]
 		},
 		{
-			"name": "Group 1",
+			"name": "Group 2",
 			"item": [
 				{
-					"name": "Yahoo",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://yahoo.com",
-							"protocol": "https",
-							"host": [
-								"yahoo",
-								"com"
-							]
+					"name": "Sub Group A",
+					"item": [
+						{
+							"name": "Yahoo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://yahoo.com",
+									"protocol": "https",
+									"host": [
+										"yahoo",
+										"com"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
 		{
-			"name": "Group 1",
+			"name": "Group 3",
 			"item": [
 				{
 					"name": "Yahoo",
@@ -85,20 +90,46 @@
 			]
 		},
 		{
-			"name": "Google",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://google.com",
-					"protocol": "https",
-					"host": [
-						"google",
-						"com"
-					]
+			"name": "Test",
+			"item": [
+				{
+					"name": "Google",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://google.com",
+							"protocol": "https",
+							"host": [
+								"google",
+								"com"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Test 2",
+			"item": [
+				{
+					"name": "Google",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://google.com",
+							"protocol": "https",
+							"host": [
+								"google",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Google",

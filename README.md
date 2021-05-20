@@ -2,7 +2,8 @@
 Jackal tools is an utility application that manipulates `Postman collections`.
 
 This application has multiple features distinguished by the `mode` parameter (see below).
-It combines collection items from [Postman](https://www.postman.com/) collections located in the `source` folder and appends into the `target` collection. All current features work as aggregations and produce: ***one output collection from many source collections***. 
+It combines collection items from [Postman](https://www.postman.com/) collections located in the `source` folder and appends into the `target` collection. The application is mainly focused on collection feature aggregations, and maintenance of single collections. 
+All merge modes are using ***one output collection from many source collections***, and the rest of the modes are ***one input collection to one output collection***.
 
 ## How to use it
 
@@ -70,9 +71,9 @@ and the Output collection will be populated with the aggregated variables
 ## NOTES
 - The application will only append Collection Variables in the Output collection 
 - You can use the Output collection as a Start collection, in this case only the new variables will be added and the Start collection **will be overwritten**
-- Source of Collection Variables are all the collections located in the Source folder
+- Source of Collection Variables/Requests are all the collections located in the Source folder
 - Duplicate (name and value) variables will not be added in the collection multiple times
 - If values are different in two same named variables then both will be added to the Output collection
 - Empty variables are not added 
 - When using the test-* modes, the source collection is no altered in any way other than adding testing assertions in the `Test` part of ***requests only***. The assertions are added beside existing `Test` code.
-- This application does not remove features from collections
+- This application does not alters source collections, the changes are only streamed to the output collection. 
