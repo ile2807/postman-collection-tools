@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
 const { help, line } = require('./lib/helper');
-const { validateParametersMerging, validateParametersTesting } = require('./lib/validation');
+const { validateParametersSourceFile, validateParametersSourceFolder } = require('./lib/validation');
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
@@ -12,7 +12,7 @@ const {addTest200} = require('./lib/test-appender')
 const {cleanup} = require('./lib/cleanup')
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
-const mode = args.m;
+const command = process.argv.slice(2)[0];
 var sourceCollectionName = args.s;
 var sourceFileContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
 
@@ -27,10 +27,10 @@ if (args.h) {
     help();
 }
 
-if (mode.startsWith("test")) {
-    validateParametersTesting(sourceCollectionName, targetCollectionName);
-} else if (mode.startsWith("merge")) {
-    validateParametersMerging(collectionsFolder, targetCollectionName);
+if (command.startsWith("t") || command.startsWith("clr")) {
+    validateParametersSourceFile(sourceCollectionName, targetCollectionName);
+} else if (command.startsWith("merge")) {
+    validateParametersSourceFolder(collectionsFolder, targetCollectionName);
 }
 
 if (sourceCollectionName != undefined) {
@@ -42,32 +42,32 @@ if (sourceCollectionName != undefined) {
 console.log('Source collections folder > ' + chalk.cyan(collectionsFolder));
 console.log('Start collection > ' + chalk.cyan(sourceCollectionName));
 console.log('Target collection > ' + chalk.cyan(targetCollectionName));
-console.log('Mode > ' + chalk.cyan(mode))
+console.log('Command > ' + chalk.cyan(command))
 line();
 
-switch (mode) {
-    case "test-http200": {
+switch (command) {
+    case "t200": {
         addTest200(sourceCollectionName, targetCollectionName);
         break;
     }
-    case "cleanup": {
+    case "clr": {
         cleanup(sourceCollectionName, targetCollectionName);
         break;
     }
-    case "merge-variables": {
+    case "mv": {
         variableMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
     }
-    case "merge-requests": {
+    case "mr": {
         requestMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
     }
-    case "merge-collections": {
+    case "mc": {
         collectionMerge(sourceFileContent, collectionsFolder, targetCollectionName);
         break;
     }
     default: {
-        console.log('Mode > ' + chalk.magenta(mode) + ' not recognized, please use -h to see more info on possible modes');
+        console.log('Command > ' + chalk.magenta(command) + ' not recognized, please use -h to see more info on possible commands');
         line();
         break;
     }

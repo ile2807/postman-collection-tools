@@ -1,9 +1,9 @@
 # Jackal tools
 Jackal tools is an utility application that manipulates `Postman collections`.
 
-This application has multiple features distinguished by the `mode` parameter (see below).
+This application has multiple features distinguished by the `command` parameter (see below).
 It combines collection items from [Postman](https://www.postman.com/) collections located in the `source` folder and appends into the `target` collection. The application is mainly focused on collection feature aggregations, and maintenance of single collections. 
-All merge modes are using ***one output collection from many source collections***, and the rest of the modes are ***one input collection to one output collection***.
+All merge commands are using ***one output collection from many source collections***, and the rest of the commands are ***one input collection to one output collection***.
 
 ## How to use it
 
@@ -14,35 +14,34 @@ To run the application just execute the application with the correct command lin
 ```bash
 npm i jackal-postman-tools -g
 
-jackal -m [mode] -f [source-folder] -s [start-collection] -o [output-collection]
+jackal [command] -f [source-folder] -s [start-collection] -o [output-collection]
 ```
 
 ### As node application from source
 
 ```bash
-node index.js -m [mode] -f [source-folder] -s [start-collection] -o [output-collection]
+node index.js [command] -f [source-folder] -s [start-collection] -o [output-collection]
 ```
 
 > NOTE: start-collection argument is optional, if not specified a new postman collection will be created
 
-## Mode options
+## Commands options
 
-|Mode   |Meaning   |Behavior   |
+|Command   |Meaning   |Behavior   |
 |---|---|---|
-|**merge-variables**  |Merge collection variables  |Merges all variables from all source folder collections in the collection variables of the output collection   |
-|**merge-requests**   |Merge collection requests   |Merges all requests from all source folder collections into the output collection, collection variables are not transfered, only requests  |
-|**merge-collection** |Merge collection in folders |Merges each collection requests from all collections (from the source folder) in a separate folder in the output collection. Collection variables in this mode are setup in the PreRequest script of each requests folder|
-|**test-http200**     |Append test assertions      |Adds test asserts (to check if response HTTP code is 200) to all requests of the source collection and saves to the output collection. In this mode, the -f flag is not used 
-|**cleanup**          |Remove duplicate requests   |All repeating occurences of absolutely the same requests (including name) will be removed, only one will remain. The remaining instance is the first occurence that the cleanup algorithm encounters while analysing. Scope of comparing duplicates is the whole collection with all folders and subfolders. In this mode, the -f flag is not used |
+|**mv**  |Merge collection variables  |Merges all variables from all source folder collections in the collection variables of the output collection   |
+|**mr**   |Merge collection requests   |Merges all requests from all source folder collections into the output collection, collection variables are not transfered, only requests  |
+|**mc** |Merge collection in folders |Merges each collection requests from all collections (from the source folder) in a separate folder in the output collection. Collection variables with this command are setup in the PreRequest script of each requests folder|
+|**t200**     |Append test assertions      |Adds test asserts (to check if response HTTP code is 200) to all requests of the source collection and saves to the output collection. With this command, the -f flag is not used 
+|**clr**          |Remove duplicate requests   |All repeating occurences of absolutely the same requests (including name) will be removed, only one will remain. The remaining instance is the first occurence that the cleanup algorithm encounters while analysing. Scope of comparing duplicates is the whole collection with all folders and subfolders. With this command, the -f flag is not used |
 
-> Modes can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
+> Commands can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next exection.
 
-Examples:
+Example:
 
 ```Bash
-jackal -f ./examples -o outTemp.json -m merge-requests
-jackal -f ./examples -s outTemp -o out.json -m merge-variables
-jackal -m test-http200 -s "./examples/Sample With variables 2.postman_collection.json" -o out.json
+jackal mr -f ./examples -o outTemp.json
+jackal mv -f ./examples -s outTemp -o out.json
 ```
 
 
@@ -58,7 +57,7 @@ jackal -m test-http200 -s "./examples/Sample With variables 2.postman_collection
 Source collections folder > ./examples
 Start collection to be upgraded > Blank collection
 Target collection > test.json
-Mode > merge-requests
+Command > merge-requests
 ---------------------------------------------------------------------
 Processing source file: Sample With variables 2.postman_collection.json
 Processing source file: Sample With variables.postman_collection.json  
@@ -75,5 +74,5 @@ and the Output collection will be populated with the aggregated variables
 - Duplicate (name and value) variables will not be added in the collection multiple times
 - If values are different in two same named variables then both will be added to the Output collection
 - Empty variables are not added 
-- When using the test-* modes, the source collection is no altered in any way other than adding testing assertions in the `Test` part of ***requests only***. The assertions are added beside existing `Test` code.
+- When using the t200 command, the source collection is not altered in any way other than appending test assertions in the `Test` part of ***requests only***. The assertions are added beside existing `Test` code.
 - This application does not alters source collections, the changes are only streamed to the output collection. 
