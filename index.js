@@ -8,8 +8,8 @@ const { validateParametersSourceFile, validateParametersSourceFolder } = require
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
-const {addTest200} = require('./lib/test-appender')
-const {cleanup} = require('./lib/cleanup')
+const { addTest200 } = require('./lib/test-appender')
+const { cleanup } = require('./lib/cleanup')
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
 const command = process.argv.slice(2)[0];
@@ -26,6 +26,8 @@ console.log(
 if (args.h) {
     help();
 }
+
+if (command===undefined) help();
 
 if (command.startsWith("t") || command.startsWith("clr")) {
     validateParametersSourceFile(sourceCollectionName, targetCollectionName);
