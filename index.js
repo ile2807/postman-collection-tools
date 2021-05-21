@@ -8,7 +8,7 @@ const { validateParametersSourceFile, validateParametersSourceFolder } = require
 const variableMerge = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
-const { addTest200 } = require('./lib/test-appender')
+const { addTest200, addTestSmart } = require('./lib/test-appender')
 const { cleanup } = require('./lib/cleanup')
 const targetCollectionName = args.o;
 const collectionsFolder = args.f;
@@ -48,6 +48,11 @@ console.log('Command > ' + chalk.cyan(command))
 line();
 
 switch (command) {
+
+    case "ts": {
+        addTestSmart(sourceCollectionName, targetCollectionName);
+        break;
+    }
     case "t200": {
         addTest200(sourceCollectionName, targetCollectionName);
         break;
