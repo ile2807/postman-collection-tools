@@ -5,12 +5,13 @@ const clear = require('clear');
 const figlet = require('figlet');
 const { help, line } = require('./lib/helper');
 const { validateParametersSourceFile, validateParametersSourceFolder } = require('./lib/validation');
-const variableMerge = require('./lib/variable-merger');
+const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
 const { addTest200, addTestSmart } = require('./lib/test-appender')
 const { cleanup } = require('./lib/cleanup')
-const targetCollectionName = args.o;
+const { appendVariables } = require('./lib/collection-missing-variable-appender')
+const outputFileName = args.o;
 const collectionsFolder = args.f;
 const command = process.argv.slice(2)[0];
 var sourceCollectionName = args.s;
@@ -27,12 +28,12 @@ if (args.h) {
     help();
 }
 
-if (command===undefined) help();
+if (command === undefined) help();
 
-if (command.startsWith("t") || command.startsWith("clr")) {
-    validateParametersSourceFile(sourceCollectionName, targetCollectionName);
+if (command.startsWith("t") || command.startsWith("clr") || command.startsWith("amcv")) {
+    validateParametersSourceFile(sourceCollectionName, outputFileName);
 } else if (command.startsWith("merge")) {
-    validateParametersSourceFolder(collectionsFolder, targetCollectionName);
+    validateParametersSourceFolder(collectionsFolder, outputFileName);
 }
 
 if (sourceCollectionName != undefined) {
@@ -43,34 +44,42 @@ if (sourceCollectionName != undefined) {
 
 console.log('Source collections folder > ' + chalk.cyan(collectionsFolder));
 console.log('Start collection > ' + chalk.cyan(sourceCollectionName));
-console.log('Target collection > ' + chalk.cyan(targetCollectionName));
+console.log('Target collection > ' + chalk.cyan(outputFileName));
 console.log('Command > ' + chalk.cyan(command))
 line();
 
 switch (command) {
 
     case "ts": {
-        addTestSmart(sourceCollectionName, targetCollectionName);
+        addTestSmart(sourceCollectionName, outputFileName);
         break;
     }
     case "t200": {
-        addTest200(sourceCollectionName, targetCollectionName);
+        addTest200(sourceCollectionName, outputFileName);
         break;
     }
     case "clr": {
-        cleanup(sourceCollectionName, targetCollectionName);
+        cleanup(sourceCollectionName, outputFileName);
         break;
     }
     case "mv": {
-        variableMerge(sourceFileContent, collectionsFolder, targetCollectionName);
+        mergeVariablesToCollection(sourceFileContent, collectionsFolder, outputFileName);
         break;
     }
     case "mr": {
-        requestMerge(sourceFileContent, collectionsFolder, targetCollectionName);
+        requestMerge(sourceFileContent, collectionsFolder, outputFileName);
         break;
     }
     case "mc": {
-        collectionMerge(sourceFileContent, collectionsFolder, targetCollectionName);
+        collectionMerge(sourceFileContent, collectionsFolder, outputFileName);
+        break;
+    }
+    case "amcv": {
+        appendVariables(sourceCollectionName, outputFileName);
+        break;
+    }
+    case "mev": {
+        mergeVariablesToEnvironment(sourceFileContent, collectionsFolder, outputFileName);
         break;
     }
     default: {
