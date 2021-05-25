@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
 const { help, line } = require('./lib/helper');
-const { validateParametersSourceFile, validateParametersSourceFolder } = require('./lib/validation');
+const { validateParametersSourceFile, validateParametersSourceFolder,validateSourceFile } = require('./lib/validation');
 const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
@@ -14,10 +14,12 @@ const { appendVariables } = require('./lib/collection-missing-variable-appender'
 const outputFileName = args.o;
 const collectionsFolder = args.f;
 const command = process.argv.slice(2)[0];
-var sourceCollectionName = args.s;
-var sourceFileContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
+var sourceFileName = args.s;
+const emptyCollectionContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf95f661324a"},"item": []}';
+const emptyEnvironmentContent = '{"id": "fdb3a494-46a0-40eb-ab98-a67a3cc3a05d","name": "New Environment","values": [],"_postman_variable_scope": "environment","_postman_exported_at": "2021-05-24T21:47:26.905Z","_postman_exported_using": "Postman/8.5.0"}';
+var sourceFileContent;
 
-clear();
+    clear();
 
 console.log(
     chalk.yellow(
@@ -31,19 +33,25 @@ if (args.h) {
 if (command === undefined) help();
 
 if (command.startsWith("t") || command.startsWith("clr") || command.startsWith("amcv")) {
-    validateParametersSourceFile(sourceCollectionName, outputFileName);
-} else if (command.startsWith("merge")) {
+    validateParametersSourceFile(sourceFileName, outputFileName);
+} else if (command.startsWith("m")) {
     validateParametersSourceFolder(collectionsFolder, outputFileName);
 }
 
-if (sourceCollectionName != undefined) {
-    sourceFileContent = fs.readFileSync(sourceCollectionName).toString();
+if (sourceFileName != undefined && validateSourceFile(sourceFileName)) {
+    sourceFileContent = fs.readFileSync(sourceFileName).toString();
 } else {
-    sourceCollectionName = "Blank collection"
+    if (command === "mv") {
+        sourceFileName = "Blank collection";
+        sourceFileContent=emptyCollectionContent;
+    } else {
+        sourceFileName = "Blank environment";
+        sourceFileContent=emptyEnvironmentContent;
+    }
 }
 
 console.log('Source collections folder > ' + chalk.cyan(collectionsFolder));
-console.log('Start collection > ' + chalk.cyan(sourceCollectionName));
+console.log('Start collection > ' + chalk.cyan(sourceFileName));
 console.log('Target collection > ' + chalk.cyan(outputFileName));
 console.log('Command > ' + chalk.cyan(command))
 line();
@@ -51,15 +59,15 @@ line();
 switch (command) {
 
     case "ts": {
-        addTestSmart(sourceCollectionName, outputFileName);
+        addTestSmart(sourceFileName, outputFileName);
         break;
     }
     case "t200": {
-        addTest200(sourceCollectionName, outputFileName);
+        addTest200(sourceFileName, outputFileName);
         break;
     }
     case "clr": {
-        cleanup(sourceCollectionName, outputFileName);
+        cleanup(sourceFileName, outputFileName);
         break;
     }
     case "mv": {
@@ -75,7 +83,7 @@ switch (command) {
         break;
     }
     case "amcv": {
-        appendVariables(sourceCollectionName, outputFileName);
+        appendVariables(sourceFileName, outputFileName);
         break;
     }
     case "mev": {
