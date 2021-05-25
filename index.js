@@ -3,8 +3,8 @@ const args = require('minimist')(process.argv.slice(2));
 const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
-const { help, line } = require('./lib/helper');
-const { validateParametersSourceFile, validateParametersSourceFolder,validateSourceFile } = require('./lib/validation');
+const { help, line, version } = require('./lib/helper');
+const { validateParametersSourceFile, validateParametersSourceFolder, validateSourceFile } = require('./lib/validation');
 const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
@@ -19,14 +19,19 @@ const emptyCollectionContent = '{"_": {"postman_id": "8dd63cc7-61b4-4743-b7b2-bf
 const emptyEnvironmentContent = '{"id": "fdb3a494-46a0-40eb-ab98-a67a3cc3a05d","name": "New Environment","values": [],"_postman_variable_scope": "environment","_postman_exported_at": "2021-05-24T21:47:26.905Z","_postman_exported_using": "Postman/8.5.0"}';
 var sourceFileContent;
 
-    clear();
+clear();
+
+if (args.v || args.version) {
+    version();
+}
 
 console.log(
     chalk.yellow(
         figlet.textSync('Jackal', { horizontalLayout: 'full' })
     )
 );
-if (args.h) {
+
+if (args.h || args.help) {
     help();
 }
 
@@ -43,10 +48,10 @@ if (sourceFileName != undefined && validateSourceFile(sourceFileName)) {
 } else {
     if (command === "mv") {
         sourceFileName = "Blank collection";
-        sourceFileContent=emptyCollectionContent;
+        sourceFileContent = emptyCollectionContent;
     } else {
         sourceFileName = "Blank environment";
-        sourceFileContent=emptyEnvironmentContent;
+        sourceFileContent = emptyEnvironmentContent;
     }
 }
 
