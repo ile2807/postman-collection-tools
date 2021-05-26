@@ -10,15 +10,15 @@ const emptyEnvironmentContent = '{"id": "fdb3a494-46a0-40eb-ab98-a67a3cc3a05d","
 var sourceFileContent;
 
 const executeCommand = (command, sourceFileName, collectionsFolder, outputFileName) => {
-    if (sourceFileName != undefined && validateSourceFile(sourceFileName)) {
+    if (sourceFileName != undefined) {
         sourceFileContent = fs.readFileSync(sourceFileName).toString();
     } else {
-        if (command === "mv") {
-            sourceFileName = "Blank collection";
-            sourceFileContent = emptyCollectionContent;
-        } else {
+        if (command === "mev") {
             sourceFileName = "Blank environment";
             sourceFileContent = emptyEnvironmentContent;
+        } else {
+            sourceFileName = "Blank collection";
+            sourceFileContent = emptyCollectionContent;
         }
     }
 
