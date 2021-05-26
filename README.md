@@ -24,7 +24,7 @@ git clone https://github.com/ile2807/postman-collection-tools.git
 
 cd postman-collection-tools
 
-node index.js [command] -f [source-folder] -s [start-collection] -o [output-collection]
+node app.js [command] -f [source-folder] -s [start-collection] -o [output-collection]
 ```
 
 ### Help

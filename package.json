@@ -1,6 +1,6 @@
 {
   "name": "jackal-postman-tools",
-  "version": "1.6.1",
+  "version": "1.6.6",
   "description": "Postman Collections manipulation tools",
   "main": "bin/index.js",
   "scripts": {
@@ -19,14 +19,13 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "clear": "^0.1.0",
-    "figlet": "^1.5.0",
     "minimist": "^1.2.5",
     "postman-collection": "^3.6.11",
     "strip-json-comments": "^3.1.1",
     "uuid": "^8.3.2"
   },
   "bin": {
-    "jackal": "./index.js"
+    "jackal": "./app.js"
   },
   "keywords": [
     "postman",
