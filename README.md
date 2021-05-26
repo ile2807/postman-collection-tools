@@ -10,12 +10,12 @@ All merge commands are using ***one output collection from many source collectio
 ### Installing npm module
 
 ```bash
-npm i jackal-postman-core
+npm i jackal-postman
 ```
 
-### Using it code
+### Using it in code
 ```JS
-const execute = require("jackal-postman-core");
+const execute = require("jackal-postman");
 execute("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
 ```
 

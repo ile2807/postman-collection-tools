@@ -62,6 +62,4 @@ const executeCommand = (command, sourceFileName, collectionsFolder, outputFileNa
     }
 }
 
-executeCommand(command, sourceFileName, collectionsFolder, outputFileName);
-
 module.execute = executeCommand;

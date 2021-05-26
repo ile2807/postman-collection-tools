@@ -1,6 +1,6 @@
 {
-  "name": "jackal-postman-core",
-  "version": "1.0.1",
+  "name": "jackal-postman",
+  "version": "1.0.2",
   "description": "Postman Collections manipulation tools",
   "main": "bin/index.js",
   "scripts": {
