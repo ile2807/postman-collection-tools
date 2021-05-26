@@ -23,43 +23,34 @@ const executeCommand = (command, sourceFileName, collectionsFolder, outputFileNa
     }
 
     switch (command) {
-
         case "ts": {
-            addTestSmart(sourceFileName, outputFileName);
-            break;
+            return addTestSmart(sourceFileName, outputFileName);
         }
         case "t200": {
-            addTest200(sourceFileName, outputFileName);
-            break;
+            return addTest200(sourceFileName, outputFileName);
         }
         case "clr": {
-            cleanup(sourceFileName, outputFileName);
-            break;
+            return cleanup(sourceFileName, outputFileName);
         }
         case "mv": {
-            mergeVariablesToCollection(sourceFileContent, collectionsFolder, outputFileName);
-            break;
+           return mergeVariablesToCollection(sourceFileName, collectionsFolder, outputFileName);
         }
         case "mr": {
-            requestMerge(sourceFileContent, collectionsFolder, outputFileName);
-            break;
+            return requestMerge(sourceFileName, collectionsFolder, outputFileName);
         }
         case "mc": {
-            collectionMerge(sourceFileContent, collectionsFolder, outputFileName);
-            break;
+            return collectionMerge(sourceFileName, collectionsFolder, outputFileName);
         }
         case "amcv": {
-            appendVariables(sourceFileName, outputFileName);
-            break;
+            return appendVariables(sourceFileName, outputFileName);
         }
         case "mev": {
-            mergeVariablesToEnvironment(sourceFileContent, collectionsFolder, outputFileName);
-            break;
+            return mergeVariablesToEnvironment(sourceFileName, collectionsFolder, outputFileName);
         }
         default: {
-            break;
+            return "Command not found";
         }
     }
 }
 
-module.execute = executeCommand;
+exports.run = (command, sourceFileName, sourceFolder, outputFileName) => executeCommand(command, sourceFileName, sourceFolder, outputFileName);

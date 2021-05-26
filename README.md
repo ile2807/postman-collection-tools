@@ -15,8 +15,8 @@ npm i jackal-postman
 
 ### Using it in code
 ```JS
-const execute = require("jackal-postman");
-execute("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
+const jackal = require("jackal-postman");
+jackal("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
 ```
 
 ## Commands options
