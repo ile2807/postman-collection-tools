@@ -16,7 +16,7 @@ npm i jackal-postman
 ### Using it in code
 ```JS
 const jackal = require("jackal-postman");
-jackal.run("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
+const executionMessage = await jackal.run("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
 ```
 
 ## Commands options
