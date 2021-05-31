@@ -1,6 +1,6 @@
 {
   "name": "jackal-postman",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Postman Collections manipulation tools",
   "main": "bin/index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ile2807/postman-collection-tools.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "author": "Ilija Trajkoski",
   "license": "GPL-3.0-or-later",
@@ -19,7 +22,8 @@
   "dependencies": {
     "postman-collection": "^3.6.11",
     "strip-json-comments": "^3.1.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "xml2json": "^0.12.0"
   },
   "keywords": [
     "postman",
