@@ -5,7 +5,7 @@ const { addTest200, addTestSmart } = require('./lib/test-appender')
 const { cleanup } = require('./lib/cleanup')
 const { appendVariables } = require('./lib/collection-missing-variable-appender')
 
-const executeCommand = async (command, sourceFileName, collectionsFolder, outputFileName) => {
+const executeCommand = async (command, sourceFileName, collectionsFolder, outputFileName, collections) => {
 
     switch (command) {
         case "ts": {
@@ -18,19 +18,19 @@ const executeCommand = async (command, sourceFileName, collectionsFolder, output
             return cleanup(sourceFileName, outputFileName);
         }
         case "mv": {
-           return mergeVariablesToCollection(sourceFileName, collectionsFolder, outputFileName);
+            return mergeVariablesToCollection(sourceFileName, collectionsFolder, outputFileName, collections);
         }
         case "mr": {
-            return requestMerge(sourceFileName, collectionsFolder, outputFileName);
+            return requestMerge(sourceFileName, collectionsFolder, outputFileName, collections);
         }
         case "mc": {
-            return collectionMerge(sourceFileName, collectionsFolder, outputFileName);
+            return collectionMerge(sourceFileName, collectionsFolder, outputFileName, collections);
         }
         case "amcv": {
             return appendVariables(sourceFileName, outputFileName);
         }
         case "mev": {
-            return mergeVariablesToEnvironment(sourceFileName, collectionsFolder, outputFileName);
+            return mergeVariablesToEnvironment(sourceFileName, collectionsFolder, outputFileName, collections);
         }
         default: {
             return "Command not found";
