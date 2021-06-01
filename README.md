@@ -16,8 +16,20 @@ npm i jackal-postman
 ### Using it in code
 ```JS
 const jackal = require("jackal-postman");
-const executionMessage = await jackal.run("clr", "sourceFile.json", "./sourceFolder", "outputFile.json");
+const executionMessage = await jackal.run("clr", "inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
 ```
+
+## How does it work
+
+### Merging commands
+Merge commands take initial file (or start with blank if not provided), take the features from the source folder collections or the set of provided collections and insert the features. The altered content is then saved in the output file.
+
+![Using the merge commands](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/ile2807/postman-collection-tools/main/mergeFeatures.iuml)
+
+### Altering commands
+Altering commands take initial file, perform the command and save the altered content in the output file.
+
+![Using the merge commands](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/ile2807/postman-collection-tools/main/otherFeatures.iuml)
 
 ## Commands options
 
@@ -33,6 +45,37 @@ const executionMessage = await jackal.run("clr", "sourceFile.json", "./sourceFol
 |**amcv**|Append missing collection variables|Appends missing collection variables that are refferenced in all requests but are not present in the collection. With this command, the `sourceFolder` is not used|
 > Commands can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next execution.
 
+## Parameters
+
+### Input file
+`inputFile` is considered any existing postman collection or postman environment file. This will will be the starting point to enhance with Jackal commands
+
+### Source folder
+`sourceFolder` is a path on a local drive that will be used as a source of collections whos features will be added to the `inputFile`, see the commands above for more info. 
+> NOTE: the scanning of files in this folder is ***not recursive***, only the *.json located directly into this folder will be considered for usage.
+
+### Source collections
+`sourceCollections` is a substitute for `sourceFolder`. It is suppose to be a list of collection files separated with comma (,). If this parameter is present in the function call, the `sourceFolder` value is ignored.
+
+### Output file
+`outputFile` is a path where we want the resulting collection/environment to be saved by the Jackal. This location should be accessible by the Jackal. This parameter is required in all use cases.
+
+
+## Commands and needed parameters
+
+:question: = Optional
+:heavy_check_mark: = Required
+:x: = Not used
+|Command   |`inputFile`| `sourceFolder` or `sourceCollections`| `outputFile`|
+|---|---|---|---|
+|mv|:question: Blank collection|:heavy_check_mark:|:heavy_check_mark:|
+|mev|:question: Blank environment|:heavy_check_mark:|:heavy_check_mark:|
+|mr|:question: Blank collection|:heavy_check_mark:|:heavy_check_mark:|
+|mc|:question: Blank collection|:heavy_check_mark:|:heavy_check_mark:|
+|clr|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|amcv|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|t200|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|ts|:heavy_check_mark:|:x:|:heavy_check_mark:|
 
 ## NOTES
 - The application will only append Collection Variables in the Output collection 
@@ -45,3 +88,4 @@ const executionMessage = await jackal.run("clr", "sourceFile.json", "./sourceFol
 - When using the t* commands, the source collection is not altered in any way other than appending test assertions in the `Test` part of ***requests only***. The assertions are added beside existing `Test` code.
 - This application does not alters source collections, the changes are only streamed to the output collection.
 - The `mev` command works with environment files, both the source and the output files ***are not*** collection files, but [Postman environment files](https://learning.postman.com/docs/sending-requests/managing-environments/)
+- `sourceCollections` is a substitute for `sourceFolder`. The commands that need these values at least one is mandatory (either or). It is useless to specify both, specifying `sourceCollections` overrides the `sourceFolder` value.

@@ -5,32 +5,32 @@ const { addTest200, addTestSmart } = require('./lib/test-appender')
 const { cleanup } = require('./lib/cleanup')
 const { appendVariables } = require('./lib/collection-missing-variable-appender')
 
-const executeCommand = async (command, sourceFileName, collectionsFolder, outputFileName, collections) => {
+const executeCommand = async (command, inputFileName, collectionsFolder, outputFileName, collections) => {
 
     switch (command) {
         case "ts": {
-            return addTestSmart(sourceFileName, outputFileName);
+            return addTestSmart(inputFileName, outputFileName);
         }
         case "t200": {
-            return addTest200(sourceFileName, outputFileName);
+            return addTest200(inputFileName, outputFileName);
         }
         case "clr": {
-            return cleanup(sourceFileName, outputFileName);
+            return cleanup(inputFileName, outputFileName);
         }
         case "mv": {
-            return mergeVariablesToCollection(sourceFileName, collectionsFolder, outputFileName, collections);
+            return mergeVariablesToCollection(inputFileName, collectionsFolder, outputFileName, collections);
         }
         case "mr": {
-            return requestMerge(sourceFileName, collectionsFolder, outputFileName, collections);
+            return requestMerge(inputFileName, collectionsFolder, outputFileName, collections);
         }
         case "mc": {
-            return collectionMerge(sourceFileName, collectionsFolder, outputFileName, collections);
+            return collectionMerge(inputFileName, collectionsFolder, outputFileName, collections);
         }
         case "amcv": {
-            return appendVariables(sourceFileName, outputFileName);
+            return appendVariables(inputFileName, outputFileName);
         }
         case "mev": {
-            return mergeVariablesToEnvironment(sourceFileName, collectionsFolder, outputFileName, collections);
+            return mergeVariablesToEnvironment(inputFileName, collectionsFolder, outputFileName, collections);
         }
         default: {
             return "Command not found";
