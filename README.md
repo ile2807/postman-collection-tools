@@ -16,8 +16,31 @@ npm i jackal-postman
 ### Using it in code
 ```JS
 const jackal = require("jackal-postman");
+//As one function call with a "command" parameter
 const executionMessage = await jackal.run("clr", "inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
 ```
+
+Alternatively you can use each function separately from version [1.2.0](https://www.npmjs.com/package/jackal-postman/v/1.2.0) and up
+```JS
+//Alternative for "ts" command
+const executionMessage = jackal.testsSmart("inputFile.json", "outputFile.json");
+//Alternative for "t200" command
+const executionMessage = jackal.tests200("inputFile.json", "outputFile.json");
+//Alternative for "clr" command
+const executionMessage = jackal.cleanRequests("inputFile.json", "outputFile.json");
+//Alternative for "mv" command
+const executionMessage = await jackal.mergeVariables("inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
+//Alternative for "mr" command
+const executionMessage = await jackal.mergeRequests("inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
+//Alternative for "mc" command
+const executionMessage = await jackal.mergeCollections("inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
+//Alternative for "mev" command
+const executionMessage = await jackal.mergeVarsToEnvironment("inputFile.json", "./sourceFolder", "outputFile.json", "./test/file1.json,./test/file2.json");
+//Alternative for "amcv" command
+const executionMessage = jackal.appendMissingVariables("inputFile.json", "outputFile.json");
+```
+
+
 
 ## How does it work
 
