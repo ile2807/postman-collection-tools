@@ -2,7 +2,7 @@ const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./l
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
 const { addTest200, addTestSmart } = require('./lib/test-appender')
-const { cleanup } = require('./lib/cleanup')
+const { cleanRequests, cleanVariables } = require('./lib/cleanup')
 const { appendVariables } = require('./lib/collection-missing-variable-appender');
 
 const executeCommand = async (command, inputFileName, collectionsFolder, outputFileName, collections) => {
@@ -15,7 +15,10 @@ const executeCommand = async (command, inputFileName, collectionsFolder, outputF
             return addTest200(inputFileName, outputFileName);
         }
         case "clr": {
-            return cleanup(inputFileName, outputFileName);
+            return cleanRequests(inputFileName, outputFileName);
+        }
+        case "clv": {
+            return cleanVariables(inputFileName, outputFileName);
         }
         case "mv": {
             return mergeVariablesToCollection(inputFileName, collectionsFolder, outputFileName, collections);
@@ -41,7 +44,8 @@ const executeCommand = async (command, inputFileName, collectionsFolder, outputF
 exports.run = executeCommand;
 exports.testsSmart = addTestSmart;
 exports.tests200 = addTest200;
-exports.cleanRequests = cleanup;
+exports.cleanRequests = cleanRequests;
+exports.cleanVariables = cleanVariables;
 exports.mergeVariables = mergeVariablesToCollection;
 exports.mergeRequests = requestMerge;
 exports.mergeCollections = collectionMerge;
