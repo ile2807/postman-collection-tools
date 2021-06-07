@@ -1,7 +1,7 @@
 const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./lib/variable-merger');
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
-const { addTest200, addTestSmart } = require('./lib/test-appender')
+const { addTest200, addTestSmart, appendRequestHash } = require('./lib/test-appender')
 const { cleanRequests, cleanVariables } = require('./lib/cleanup')
 const { appendVariables } = require('./lib/collection-missing-variable-appender');
 
@@ -32,6 +32,9 @@ const executeCommand = async (command, inputFileName, collectionsFolder, outputF
         case "amcv": {
             return appendVariables(inputFileName, outputFileName);
         }
+        case "arph": {
+            return appendRequestHash(inputFileName, outputFileName);
+        }
         case "mev": {
             return mergeVariablesToEnvironment(inputFileName, collectionsFolder, outputFileName, collections);
         }
@@ -51,4 +54,5 @@ exports.mergeRequests = requestMerge;
 exports.mergeCollections = collectionMerge;
 exports.mergeVarsToEnvironment = mergeVariablesToEnvironment;
 exports.appendMissingVariables = appendVariables;
+exports.appendRequestHash = appendRequestHash;
 
