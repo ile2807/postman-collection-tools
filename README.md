@@ -42,6 +42,10 @@ const executionMessage = await jackal.mergeVarsToEnvironment("inputFile.json", "
 const executionMessage = jackal.appendMissingVariables("inputFile.json", "outputFile.json");
 //Alternative for "arph" command
 const executionMessage = jackal.appendRequestHash("inputFile.json", "outputFile.json");
+//Alternative for "emd" command
+const executionMessage = jackal.exportMDDescription("inputFile.json", "outputFile.md");
+//Alternative for "epdf" command
+const executionMessage = jackal.exportPDFDescription("inputFile.json", "outputFile.pdf");
 ```
 
 
@@ -70,8 +74,10 @@ Altering commands take initial file, perform the command and save the altered co
 |`t200`     |Append HTTP 200 test assertions      |Adds test asserts (to check if response HTTP code is 200) to all requests of the source collection and saves to the output collection. With this command, the `sourceFolder` is not used 
 |`clr`          |Remove duplicate requests   |All repeating occurrences of absolutely the same requests (including name) will be removed, only one will remain. The remaining instance is the first occurrence that the cleanup algorithm encounters while analyzing. Scope of comparing duplicates is the whole collection with all folders and subfolders. With this command, the `sourceFolder` is not used |
 |`clv`          |Remove unused collection variables   |Removes all unused collection variables from the collection. It goes through the whole collection and looks for used variables. Then removes all collection variables that are not referenced anywhere in the collection. With this command, the `sourceFolder` is not used |
-|`arph`|Append request payload hash| Appends code in PreRequest code that hashes the request body with `hashPassword` variable value. This hash is then added to the request as `key` header. 
+|`arph`|Append request payload hash| Appends code in PreRequest code that hashes the request body with `hashPassword` variable value. This hash is then added to the request as `PayloadHash` header. 
 |`amcv`|Append missing collection variables|Appends missing collection variables that are referenced in any request, but are not present in the collection. With this command, the `sourceFolder` is not used|
+|`emd`|Generate MD document from collection|Creates summary Markdown document from all the collection descriptions. ***This feature does not automatically generate descriptions***.  It only collects descriptions of all elements of the collection and creates one summary Markdown file. With this command, the `sourceFolder` is not used|
+|`epdf`|Generate PDF document from collection|Creates PDF document from all the collection descriptions. ***This feature does not automatically generate descriptions***. It collects descriptions of all elements of the collection and creates one summary PDF document file. With this command, the `sourceFolder` is not used|
 > Commands can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next execution.
 
 ## Parameters
@@ -103,10 +109,12 @@ Altering commands take initial file, perform the command and save the altered co
 |`mc`|:question: Blank collection|:heavy_check_mark:|:heavy_check_mark:|
 |`clr`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`clv`|:heavy_check_mark:|:x:|:heavy_check_mark:|
-|`arph`|:heavy_check_mark:|:x:|:heavy_check_mark:|
-|`amcv`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`t200`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`ts`|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|`arph`|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|`amcv`|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|`emd`|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|`epdf`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 
 ## NOTES
 - The application will only append Collection Variables in the Output collection 
@@ -121,4 +129,4 @@ Altering commands take initial file, perform the command and save the altered co
 - The `mev` command works with environment files, both the source and the output files ***are not*** collection files, but [Postman environment files](https://learning.postman.com/docs/sending-requests/managing-environments/)
 - `sourceCollections` is a substitute for `sourceFolder`. The commands that need these values at least one is mandatory (either or). It is useless to specify both, specifying `sourceCollections` overrides the `sourceFolder` value.
 - `clr` and `clv` are removing features from the `inputFile` and saves the cleaned up file in the `outputFile`
-- `arph` is self contained, it will not cause any problems if added and some values missing in the collection like the . `hashPassword`
+- `arph` is self contained, it will not cause any problems if added and some values missing in the collection like the`hashPassword`
