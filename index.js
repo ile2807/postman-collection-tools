@@ -62,4 +62,7 @@ exports.mergeCollections = collectionMerge;
 exports.mergeVarsToEnvironment = mergeVariablesToEnvironment;
 exports.appendMissingVariables = appendVariables;
 exports.appendRequestHash = appendRequestHash;
+exports.exportDescriptionMD = exportDescriptionMD;
+exports.exportDescriptionPDF = exportDescriptionPDF;
+
 
