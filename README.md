@@ -1,4 +1,7 @@
 # Jackal tools core
+
+ [![PayPal][badge_paypal_donate]][paypal-donations] [![Ask me anything](https://img.shields.io/badge/ask%20me-anything-1abc9c.svg)](https://github.com/ile2807/postman-collection-tools) [![Version](https://img.shields.io/npm/v/jackal-postman)](https://www.npmjs.com/package/jackal-postman) [![Downloads](https://img.shields.io/npm/dt/jackal-postman)](https://www.npmjs.com/package/jackal-postman)
+
 Jackal tools is an utility core library that manipulates `Postman collections`.
 
 This library has multiple features distinguished by the `command` parameter (see below).
@@ -42,6 +45,8 @@ const executionMessage = await jackal.mergeVarsToEnvironment("inputFile.json", "
 const executionMessage = jackal.appendMissingVariables("inputFile.json", "outputFile.json");
 //Alternative for "arph" command
 const executionMessage = jackal.appendRequestHash("inputFile.json", "outputFile.json");
+//Alternative for "ged" command
+const executionMessage = jackal.generateDescriptions("inputFile.json", "outputFile.json");
 //Alternative for "emd" command
 const executionMessage = jackal.exportMDDescription("inputFile.json", "outputFile.md");
 //Alternative for "epdf" command
@@ -76,8 +81,9 @@ Altering commands take initial file, perform the command and save the altered co
 |`clv`          |Remove unused collection variables   |Removes all unused collection variables from the collection. It goes through the whole collection and looks for used variables. Then removes all collection variables that are not referenced anywhere in the collection. With this command, the `sourceFolder` is not used |
 |`arph`|Append request payload hash| Appends code in PreRequest code that hashes the request body with `hashPassword` variable value. This hash is then added to the request as `PayloadHash` header. 
 |`amcv`|Append missing collection variables|Appends missing collection variables that are referenced in any request, but are not present in the collection. With this command, the `sourceFolder` is not used|
-|`emd`|Generate MD document from collection|Creates summary Markdown document from all the collection descriptions. ***This feature does not automatically generate descriptions***.  It only collects descriptions of all elements of the collection and creates one summary Markdown file. With this command, the `sourceFolder` is not used|
-|`epdf`|Generate PDF document from collection|Creates PDF document from all the collection descriptions. ***This feature does not automatically generate descriptions***. It collects descriptions of all elements of the collection and creates one summary PDF document file. With this command, the `sourceFolder` is not used|
+|`ged`|Generate MD descriptions in collection|Generates MD descriptions on collection and requests, the description is in MD format and is saved in the output collection file. This command saves the MD descriptions in the collection file. To export these descriptions in a separate MD or PDF file use `emd` or `epdf` respectively. With this command, the `sourceFolder` is not used|
+|`emd`|Export MD document from collection|Creates summary Markdown document from all the collection descriptions. ***This feature does not automatically generate descriptions***.  It only collects descriptions of all elements of the collection and creates one summary Markdown file. With this command, the `sourceFolder` is not used|
+|`epdf`|Export PDF document from collection|Creates PDF document from all the collection descriptions. ***This feature does not automatically generate descriptions***. It collects descriptions of all elements of the collection and creates one summary PDF document file. With this command, the `sourceFolder` is not used|
 > Commands can be combined by executing them one after the other and using the output collection of the first execution as a source collection of the next execution.
 
 ## Parameters
@@ -113,6 +119,7 @@ Altering commands take initial file, perform the command and save the altered co
 |`ts`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`arph`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`amcv`|:heavy_check_mark:|:x:|:heavy_check_mark:|
+|`gmd`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`emd`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 |`epdf`|:heavy_check_mark:|:x:|:heavy_check_mark:|
 
