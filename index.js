@@ -2,7 +2,7 @@ const { mergeVariablesToCollection, mergeVariablesToEnvironment } = require('./l
 const requestMerge = require('./lib/request-merger');
 const collectionMerge = require('./lib/collection-merger');
 const { addTest200, addTestSmart, appendRequestHash } = require('./lib/test-appender')
-const { exportDescriptionMD, exportDescriptionPDF } = require('./lib/exporter')
+const { exportDescriptionMD } = require('./lib/exporter')
 const { generateDescriptions } = require('./lib/generator')
 const { cleanRequests, cleanVariables } = require('./lib/cleanup')
 const { appendVariables } = require('./lib/collection-missing-variable-appender');
@@ -43,9 +43,6 @@ const executeCommand = async (command, inputFileName, collectionsFolder, outputF
         case "emd": {
             return exportDescriptionMD(inputFileName, outputFileName);
         }
-        case "epdf": {
-            return exportDescriptionPDF(inputFileName, outputFileName);
-        }
         case "mev": {
             return mergeVariablesToEnvironment(inputFileName, collectionsFolder, outputFileName, collections);
         }
@@ -68,6 +65,5 @@ exports.appendMissingVariables = appendVariables;
 exports.appendRequestHash = appendRequestHash;
 exports.generateDescriptions = generateDescriptions;
 exports.exportDescriptionMD = exportDescriptionMD;
-exports.exportDescriptionPDF = exportDescriptionPDF;
 
 
